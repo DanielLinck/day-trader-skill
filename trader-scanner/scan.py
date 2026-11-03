@@ -170,6 +170,54 @@ def eastern_to_utc(local):
     return local + datetime.timedelta(hours=5)
 
 
+# ---------------------------------------------------------------- Xetra
+# Mit der Umgebungsvariable TRADER_MARKET=xetra laeuft das Skript auf Xetra:
+# alle Uhrzeiten in Berliner Zeit, Handel 9:00 bis 17:30, Xetra-Feiertage.
+# Ohne die Variable bleibt alles wie bisher (New York), damit die Tests gruen bleiben.
+# Die Namen (eastern_..., NYSE_...) bleiben gleich, damit der Rest des Codes nichts merkt.
+MARKET = os.environ.get("TRADER_MARKET", "us").strip().lower()
+
+if MARKET == "xetra":
+    NYSE_HOLIDAYS = {  # handelsfreie Tage laut Handelskalender der Deutschen Boerse
+        "2026-01-01": "Neujahr",
+        "2026-04-03": "Karfreitag",
+        "2026-04-06": "Ostermontag",
+        "2026-05-01": "Tag der Arbeit",
+        "2026-12-24": "Heiligabend",
+        "2026-12-25": "1. Weihnachtsfeiertag",
+        "2026-12-31": "Silvester",
+        "2027-01-01": "Neujahr",
+        "2027-03-26": "Karfreitag",
+        "2027-03-29": "Ostermontag",
+        "2027-12-24": "Heiligabend",
+        "2027-12-31": "Silvester",
+    }
+    NYSE_EARLY_CLOSE = {}
+    OPEN = datetime.time(9, 0)
+    CLOSE = datetime.time(17, 30)
+    EARLY = CLOSE
+
+    def _last_sunday(year, month):
+        last = datetime.date(year, month + 1, 1) - datetime.timedelta(days=1)
+        return last - datetime.timedelta(days=(last.weekday() + 1) % 7)
+
+    def eastern_offset(utc):
+        """Stunden ab UTC fuer Berlin: +2 in der Sommerzeit, sonst +1.
+        EU-Regel: Sommerzeit vom letzten Sonntag im Maerz bis zum letzten
+        Sonntag im Oktober, jeweils um 1:00 UTC."""
+        y = utc.year
+        start = datetime.datetime.combine(_last_sunday(y, 3), datetime.time(1, 0))
+        end = datetime.datetime.combine(_last_sunday(y, 10), datetime.time(1, 0))
+        naive = utc.replace(tzinfo=None)
+        return 2 if start <= naive < end else 1
+
+    def eastern_to_utc(local):
+        for off in (2, 1):
+            utc = local - datetime.timedelta(hours=off)
+            if eastern_offset(utc) == off:
+                return utc
+        return local - datetime.timedelta(hours=1)
+    
 def ts_to_eastern(ts):
     """Unix seconds -> naive New York time. Never uses the machine's time zone."""
     return to_eastern(datetime.datetime(1970, 1, 1) + datetime.timedelta(seconds=int(ts)))
