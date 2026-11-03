@@ -316,7 +316,10 @@ def yahoo_get(path):
 
 
 def to_yahoo(sym):
-    return sym.upper().replace(".", "-")
+    sym = sym.upper()
+    if sym.endswith(".DE"):  # Xetra-Ticker (SAP.DE): Yahoo will den Punkt behalten
+        return sym
+    return sym.replace(".", "-")
 
 
 def spark_path(symbols, rng, interval):

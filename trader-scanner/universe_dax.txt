@@ -1,0 +1,41 @@
+   # DAX 40, Stand der Zusammensetzung: 22.06.2026 (Format: TICKER|Name)
+   ADS.DE|Adidas
+   AIR.DE|Airbus
+   ALV.DE|Allianz
+   BAS.DE|BASF
+   BAYN.DE|Bayer
+   BEI.DE|Beiersdorf
+   BMW.DE|BMW
+   BNR.DE|Brenntag
+   CBK.DE|Commerzbank
+   CON.DE|Continental
+   DTG.DE|Daimler Truck
+   DBK.DE|Deutsche Bank
+   DB1.DE|Deutsche Boerse
+   DHL.DE|DHL Group
+   DTE.DE|Deutsche Telekom
+   EOAN.DE|E.ON
+   FRE.DE|Fresenius
+   FME.DE|Fresenius Medical Care
+   G1A.DE|GEA Group
+   HNR1.DE|Hannover Rueck
+   HEI.DE|Heidelberg Materials
+   HOT.DE|Hochtief
+   HEN3.DE|Henkel
+   IFX.DE|Infineon
+   MBG.DE|Mercedes-Benz Group
+   MRK.DE|Merck KGaA
+   MTX.DE|MTU Aero Engines
+   MUV2.DE|Munich Re
+   QIA.DE|Qiagen
+   RHM.DE|Rheinmetall
+   RWE.DE|RWE
+   SAP.DE|SAP
+   G24.DE|Scout24
+   SIE.DE|Siemens
+   ENR.DE|Siemens Energy
+   SHL.DE|Siemens Healthineers
+   SY1.DE|Symrise
+   VOW3.DE|Volkswagen Vz
+   VNA.DE|Vonovia
+   ZAL.DE|Zalando
